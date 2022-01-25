@@ -6,10 +6,10 @@ from wordle_decipher.config import WORD_SIZE, LANGUAGE
 import sys
 import os
 import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
 
-
-
-_INITIAL_WORD = get_best_initial_word()
+_INITIAL_WORD = get_best_initial_word(word_length=WORD_SIZE)
 
 def run_automatically(game, decipher_game):
     game.reset_game()
@@ -31,7 +31,7 @@ def run_automatically(game, decipher_game):
         correctness = "".join([str(x) for x in result])
         decipher_game.filter_possible_results(word=word, word_correctness=correctness)
 
-    return game.attempt, game.won
+    return game.attempt
 
 
 def block_print():
@@ -47,17 +47,19 @@ def avg(input_list):
 
 
 if __name__ == '__main__':
+
     block_print()
     dictionary_word_list = create_input_list(word_length=WORD_SIZE, language=LANGUAGE)
     game = WordGame(dictionary_word_list, word_length=WORD_SIZE)
+    game.MAX_ATTEMPTS = 99
     decipher = WordDecipher(dictionary_word_list, word_length=WORD_SIZE)
     attempts = []
     wins = []
-    iterations = 1000
+    iterations = 10
     for i in range(iterations):
-        attempt, won = run_automatically(game, decipher)
+        attempt = run_automatically(game, decipher)
         attempts.append(attempt)
-        if won:
+        if attempt < 7:
             wins.append(1)
         else:
             wins.append(0)
@@ -66,11 +68,19 @@ if __name__ == '__main__':
 
     print(f'Code was run for {iterations} iterations')
     print(f'Average attempts: {avg(attempts)}')
-    print(f'Wins: {round(avg(wins)*100,2)}%')
+    print(f'Wins: {round(avg(wins) * 100, 2)}%')
     print('----------------------------------------------------------------------------------------------')
     df = pd.DataFrame.from_dict(dict(Counter(attempts)), orient='index', columns=['count']).sort_index()
     df.index.name = 'attempts'
-    new_row = pd.Series(data={'count': (len(wins)-sum(wins))}, name='losses')
-    df = df.append(new_row, ignore_index=False)
+
     df['%'] = (df['count'] / df['count'].sum()) * 100
+
     print(df)
+
+    # df = df.reset_index()
+    # df = df.assign(word_size=WORD_SIZE)
+    # dataframes.append(df)
+    # joined_dataframes = pd.concat(dataframes)
+    # sns.set_palette("PuBuGn_d")
+    # ax = sns.lineplot(data=joined_dataframes, x="attempts", y="%", hue="word_size",  palette="flare")
+    # plt.show()

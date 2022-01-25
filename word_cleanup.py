@@ -12,7 +12,7 @@ def create_input_list(word_length=WORD_SIZE, language=LANGUAGE):
     for word in list(df['word']):
         if len(str(word)) == word_length:
             add_word = True
-            letters = list(word)
+            letters = list(str(word))
             for lno, letter in enumerate(letters):
                 if letter not in characters:
                     add_word = False

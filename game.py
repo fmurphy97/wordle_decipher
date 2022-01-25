@@ -5,6 +5,8 @@ from wordle_decipher.config import WORD_SIZE, LANGUAGE
 
 class WordGame:
 
+    MAX_ATTEMPTS = 6
+
     def __init__(self, filtered_list, word_length):
         self.unfiltered_list = filtered_list
         self.filtered_list = filtered_list
@@ -43,11 +45,11 @@ class WordGame:
         self.attempt += 1
         score = sum(result)
 
-        if self.attempt == 6:
+        if self.attempt == self.MAX_ATTEMPTS:
             self.complete = True
             if score < self.word_length * 2:
                 print(f'You loose, the word was {self.secret_word}')
-        if score == self.word_length * 2 and self.attempt <= 6:
+        if score == self.word_length * 2 and self.attempt <= self.MAX_ATTEMPTS:
             print(f'You won in {self.attempt} tries')
             self.complete = True
             self.won = True

@@ -105,16 +105,17 @@ and the count and percentage of times each number of attempts it took to win.
 The following table shows the statistics for the code ran 1000 times in english:
 
 Average attempts: 3.901.
-Wins: 99.0%.
+Wins: 98.8%.
 
 | Attempts | Count | % | 
 | :----: | :----: | :----: | 
-|2| 54 | 5.34|
-|3|293 |29.00|
-|4|409 |40.49|
-|5|186 |18.41|
-|6| 58 | 5.74|
-|losses| 10 | 0.99|
+|2| 290 | 5.8|
+|3|1553 |31.1|
+|4|1904 |38.1|
+|5|921 |18.4|
+|6| 279 | 5.4|
+|7| 47 | 0.9|
+|8| 15 | 5.3|
 
 
 # Credits

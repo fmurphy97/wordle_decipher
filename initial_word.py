@@ -4,22 +4,22 @@ import operator
 from wordle_decipher.word_cleanup import create_input_list
 from wordle_decipher.config import WORD_SIZE, LANGUAGE
 
-def calculate_word_commonality(word, LETTER_FREQUENCY):
+def calculate_word_commonality(word, LETTER_FREQUENCY, word_length):
     score = 0.0
     for char in word:
         score += LETTER_FREQUENCY[char]
-    return score / (WORD_SIZE - len(set(word)) + 1)
+    return score / (word_length - len(set(word)) + 1)
 
-def sort_by_word_commonality(words, LETTER_FREQUENCY):
+def sort_by_word_commonality(words, LETTER_FREQUENCY, word_length):
     sort_by = operator.itemgetter(1)
     return sorted(
-        [(word, calculate_word_commonality(word, LETTER_FREQUENCY)) for word in words],
+        [(word, calculate_word_commonality(word, LETTER_FREQUENCY, word_length=word_length)) for word in words],
         key=sort_by,
         reverse=True,
     )
 
-def get_best_initial_word():
-    dictionary_word_list = create_input_list(word_length=WORD_SIZE, language=LANGUAGE)
+def get_best_initial_word(word_length=WORD_SIZE):
+    dictionary_word_list = create_input_list(word_length=word_length, language=LANGUAGE)
 
     LETTER_COUNTER = Counter(chain.from_iterable(dictionary_word_list))
 
@@ -27,7 +27,7 @@ def get_best_initial_word():
         character: value / sum(LETTER_COUNTER.values())
         for character, value in LETTER_COUNTER.items()
     }
-    final_list = ([x[0] for x in sort_by_word_commonality(dictionary_word_list, LETTER_FREQUENCY)[:1000]])
+    final_list = ([x[0] for x in sort_by_word_commonality(dictionary_word_list, LETTER_FREQUENCY,word_length=word_length )[:1000]])
     return final_list[0]
 
 def get_best_initial_words_manually():
