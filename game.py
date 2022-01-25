@@ -1,25 +1,26 @@
 from collections import Counter
 import random
-
+from wordle_decipher.word_cleanup import create_input_list
+from wordle_decipher.config import WORD_SIZE, LANGUAGE
 
 class WordGame:
 
-    def __init__(self, filtered_list):
+    def __init__(self, filtered_list, word_length):
         self.unfiltered_list = filtered_list
         self.filtered_list = filtered_list
         self.complete = False
         self.attempt = 0
+        self.won = False
+        self.secret_word = ""
+        self.word_length = word_length
 
-        max_size = int(0.03 * len(five_word_list))
-        secret_word = random.choice(five_word_list[:max_size])
-        self.secret_word = secret_word
-
-    def run(self):
+    def run_game(self):
+        self.reset_game()
         while not self.complete:
             while True:
                 word = input("Enter chosen word:  ").strip().lower()
-                if word not in self.filtered_list or len(word) != 5:
-                    print('Word must be in dictionary and have 5 characters')
+                if word not in self.filtered_list or len(word) != self.word_length:
+                    print(f'Word must be in dictionary and have {self.word_length} characters')
                     continue
                 else:
                     break
@@ -27,28 +28,29 @@ class WordGame:
             self.check_victory(result)
         replay = input("Press (y)es to play again, (n)o to exit")
         if replay == 'y':
-            self.reset_file()
-            self.run()
+            self.run_game()
 
-    def reset_file(self):
+    def reset_game(self):
         self.filtered_list = self.unfiltered_list
         self.complete = False
         self.attempt = 0
-        max_size = int(0.03 * len(five_word_list))
-        secret_word = random.choice(five_word_list[:max_size])
+        max_size = int(0.05 * len(self.unfiltered_list))
+        secret_word = random.choice(self.unfiltered_list[:max_size])
         self.secret_word = secret_word
+        self.won = False
 
     def check_victory(self, result):
-        score = sum(result)
-        if self.attempt == 6 and score < 5 * 2:
-            print(f'You loose, the word was {self.secret_word}')
-            self.complete = True
-        elif self.attempt == 6:
-            self.complete = True
-        elif score == 5 * 2:
-            print('You win')
-            self.complete = True
         self.attempt += 1
+        score = sum(result)
+
+        if self.attempt == 6:
+            self.complete = True
+            if score < self.word_length * 2:
+                print(f'You loose, the word was {self.secret_word}')
+        if score == self.word_length * 2 and self.attempt <= 6:
+            print(f'You won in {self.attempt} tries')
+            self.complete = True
+            self.won = True
 
     def make_output(self, word):
         result, iw_remaining_letters, sw_remaining_letters = self.check_green(word)
@@ -57,7 +59,7 @@ class WordGame:
         return result
 
     def check_green(self, word):
-        result = [0 for x in range(5)]
+        result = [0 for x in range(self.word_length)]
         iw_remaining_letters = list(word)
         sw_remaining_letters = list(self.secret_word)
         for lno, letter in enumerate(word):
@@ -83,23 +85,19 @@ class WordGame:
         return result
 
 
-instructions = 'Adivina la palabra en seis intentos.' \
-               '\nCada intento debe ser una palabra válida de 5 letras. Pulsa ENTER para enviar.' \
-               '\nDespués de cada intento el color de las letras cambia para mostrar qué ' \
-               'tan cerca estás de acertar la palabra.}' \
-               '\n Cada vez que se inserta una palabra muestra un 2 si la letra esta ' \
-               'en la palabra y en la posición correcta.' \
-               '\n Muestra un 1 si la letra está en la palabra pero en la posición incorrecta.' \
-               '\n Muestra un 0 si la letra no está en la palabr.' \
-               '\n---------------------------------------------------------------------------------------------------' \
-               '\n'
 
 if __name__ == '__main__':
-    input_file = open('sorted_words.json', "r", encoding='utf-8')
-    word_list_string = input_file.read()
-    five_word_list = eval(word_list_string)
-    input_file.close()
-
-    game = WordGame(five_word_list)
-    print(instructions)
-    game.run()
+    dictionary_word_list = create_input_list(word_length=WORD_SIZE, language=LANGUAGE)
+    game = WordGame(dictionary_word_list, word_length=WORD_SIZE)
+    # instructions = 'Adivina la palabra en seis intentos.' \
+    #                f'\nCada intento debe ser una palabra válida de {game.word_length} letras. Pulsa ENTER para enviar.' \
+    #                '\nDespués de cada intento el color de las letras cambia para mostrar qué ' \
+    #                'tan cerca estás de acertar la palabra.' \
+    #                '\nCada vez que se inserta una palabra muestra un 2 si la letra esta ' \
+    #                'en la palabra y en la posición correcta.' \
+    #                '\n Muestra un 1 si la letra está en la palabra pero en la posición incorrecta.' \
+    #                '\n Muestra un 0 si la letra no está en la palabra.' \
+    #                '\n---------------------------------------------------------------------------------------------------' \
+    #                '\n'
+    # print(instructions)
+    game.run_game()
