@@ -1,8 +1,8 @@
 from collections import Counter
 from itertools import chain
 import operator
-from wordle_decipher.word_cleanup import create_input_list
-from wordle_decipher.config import WORD_SIZE, LANGUAGE
+from word_cleanup import create_input_list
+from config import WORD_SIZE, LANGUAGE
 
 def calculate_word_commonality(word, LETTER_FREQUENCY, word_length):
     score = 0.0

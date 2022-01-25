@@ -1,6 +1,6 @@
 import pandas as pd
 import pathlib
-from wordle_decipher.config import WORD_SIZE, LANGUAGE, special_characters_all_languages, characters_all_languages
+from config import WORD_SIZE, LANGUAGE, special_characters_all_languages, characters_all_languages
 
 
 def create_input_list(word_length=WORD_SIZE, language=LANGUAGE):

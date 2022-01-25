@@ -1,8 +1,8 @@
-from wordle_decipher.decipher_game import *
-from wordle_decipher.game import *
-from wordle_decipher.initial_word import *
-from wordle_decipher.word_cleanup import create_input_list
-from wordle_decipher.config import WORD_SIZE, LANGUAGE
+from decipher_game import *
+from game import *
+from initial_word import *
+from word_cleanup import create_input_list
+from config import WORD_SIZE, LANGUAGE
 import sys
 import os
 import pandas as pd

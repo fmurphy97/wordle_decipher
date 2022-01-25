@@ -1,7 +1,7 @@
 from collections import Counter
 import random
-from wordle_decipher.word_cleanup import create_input_list
-from wordle_decipher.config import WORD_SIZE, LANGUAGE
+from word_cleanup import create_input_list
+from config import WORD_SIZE, LANGUAGE
 
 class WordGame:
 
