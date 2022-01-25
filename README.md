@@ -1,9 +1,9 @@
 # Wordle Decipher
 
 *This project was made to:*
-1. Play the game as many times as you want 
-2. Help the player decide which words to place in the game
-3. Help the player decide which initial word to use in the game*
+1. Play the game as many times as you want.
+2. Help the player decide which words to place in the game.
+3. Help the player decide which initial word to use in the game.
 
 
 ## Game
@@ -17,14 +17,13 @@ To initialize the program run the "game.py", and play as many times as you pleas
 The default language is english. If you wish to change it head to the "config.py" file and change 
 the "LANGUAGE" parameter to 'spanish', 'english' or 'french'.
 
-By default, the words have 5 characters. If you want to experiment beyond these imagination boundaiaries
+By default, the words have 5 characters. If you want to experiment beyond this boundaries
  head to the "config.py" file and change the "WORD_SIZE" parameter to any size you please.
 
 
 ### Game instructions
-The objective is to guess the word in 6 tries or less.
-Each guess must be a valid 5 letter word.
-Hit the enter button to submit.
+The objective is to guess the word in 6 or less tries.
+Each guess must be a valid 5-letter word.
 
 After each guess, a vector will show you how close your guess was to the secret word.
 
@@ -125,11 +124,11 @@ Wins: 99.0%.
 Code to run the initial word:
 [Solving Wordle Puzzles with Basic Python by Mickey Petersen](https://www.inspiredpython.com/article/solving-wordle-puzzles-with-basic-python)
 
-Spanish words obtained in:
+Spanish words obtained from:
 [Corpus de Referencia del Español Actual by Real Academia Española](http://corpus.rae.es/lfrecuencias.html)
 
-English words obtained in:
+English words obtained from:
 [English Word Frequency by Rachael Tatman](https://www.kaggle.com/rtatman/english-word-frequency/version/1)
 
-French words obtained in:
+French words obtained from:
 [LEXIQUE By Boris New & Christophe Pallier](http://www.lexique.org/)
