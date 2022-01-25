@@ -24,3 +24,18 @@ def create_input_list(word_length=WORD_SIZE, language=LANGUAGE):
                 dictionary_word_list.append(word)
 
     return list(dict.fromkeys(dictionary_word_list))
+
+
+# import matplotlib.pyplot as plt
+# dicto = {}
+# for i in range(7):
+#     wordleng = i + 3
+#     aa = create_input_list(word_length=wordleng)
+#     dicto[wordleng] = len(aa)
+#
+#     plt.bar(list(dicto.keys()), list(dicto.values()))
+#
+#     plt.xlabel("Word Length")
+#     plt.ylabel("Amount of words")
+#     plt.title("Words by Length")
+#     plt.show()

@@ -1,7 +1,7 @@
 available_languages = ['english', 'spanish', 'french']
 
 WORD_SIZE = 5
-LANGUAGE = 'spanish'
+LANGUAGE = 'english'
 
 # This is just to check the input is correct
 LANGUAGE = available_languages[available_languages.index(LANGUAGE)]

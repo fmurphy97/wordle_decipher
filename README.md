@@ -102,7 +102,7 @@ This shows statistics on how is the model expected to behave if tested in the re
 It shows the average attempts for the won games, the percentage of wins (games solved in less than  7 attempts)
 and the count and percentage of times each number of attempts it took to win.
 
-The following table shows the statistics for the code ran 1000 times in english:
+The following table shows the statistics for the code ran 5000 times in english:
 
 Average attempts: 3.901.
 Wins: 98.8%.

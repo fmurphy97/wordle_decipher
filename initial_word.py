@@ -4,13 +4,13 @@ import operator
 from word_cleanup import create_input_list
 from config import WORD_SIZE, LANGUAGE
 
-def calculate_word_commonality(word, LETTER_FREQUENCY, word_length):
+def calculate_word_commonality(word, LETTER_FREQUENCY, word_length=WORD_SIZE):
     score = 0.0
     for char in word:
         score += LETTER_FREQUENCY[char]
     return score / (word_length - len(set(word)) + 1)
 
-def sort_by_word_commonality(words, LETTER_FREQUENCY, word_length):
+def sort_by_word_commonality(words, LETTER_FREQUENCY, word_length=WORD_SIZE):
     sort_by = operator.itemgetter(1)
     return sorted(
         [(word, calculate_word_commonality(word, LETTER_FREQUENCY, word_length=word_length)) for word in words],
